@@ -3,7 +3,7 @@ import React, { memo } from 'react'
 export default memo(function App() {
   return (
     <div>
-      music
+      <h2>music</h2>
     </div>
   )
 })
