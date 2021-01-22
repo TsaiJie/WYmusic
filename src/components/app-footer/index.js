@@ -1,4 +1,4 @@
-import React, { Fragment, memo } from 'react';
+import React, {  memo } from 'react';
 import { footerLinks, footerImages } from '@/common/local-data';
 import { FooterWrapper, FooterLeft, FooterRight } from './style';
 export default memo(function WYAppFooter() {
@@ -9,12 +9,12 @@ export default memo(function WYAppFooter() {
           <div className="link">
             {footerLinks.map((item) => {
               return (
-                <Fragment>
-                  <a href={item.link} target="_blank" rel="noopener noreferrer">
+                <div key={item.title}>
+                  <a href={item.link}  target="_blank" rel="noopener noreferrer">
                     {item.title}
                   </a>
                   <span className="line">|</span>
-                </Fragment>
+                </div>
               );
             })}
           </div>

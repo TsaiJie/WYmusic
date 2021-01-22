@@ -15,9 +15,13 @@ export const FooterLeft = styled.div`
   padding-top: 15px;
   line-height: 24px;
   .link {
-    a {
-      color: #999;
+    div {
+      display: inline-block;
+      a {
+        color: #999;
+      }
     }
+
     .line {
       margin: 0 10px;
       color: #999;
@@ -44,7 +48,7 @@ export const FooterRight = styled.ul`
       display: block;
       width: 50px;
       height: 45px;
-      background-image: url(${require("@/assets/img/sprite_footer_02.png").default});
+      background-image: url(${require('@/assets/img/sprite_footer_02.png').default});
       background-size: 110px 450px;
     }
     :nth-child(1) .link {
@@ -64,7 +68,7 @@ export const FooterRight = styled.ul`
       display: block;
       width: 52px;
       height: 10px;
-      background-image: url(${require("@/assets/img/sprite_footer_01.png").default});
+      background-image: url(${require('@/assets/img/sprite_footer_01.png').default});
       background-size: 180px 100px;
     }
 
@@ -84,6 +88,5 @@ export const FooterRight = styled.ul`
       background-position: -1px -72px;
       margin-top: 6px;
     }
-  
   }
 `;
