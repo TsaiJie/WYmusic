@@ -55,7 +55,21 @@ export default memo(function WYAppFooter() {
             </a>
           </div>
         </FooterLeft>
-        <FooterRight></FooterRight>
+        <FooterRight className="right">
+          {footerImages.map((item, index) => {
+            return (
+              <li className="item" key={item.link}>
+                <a
+                  className="link"
+                  href={item.link}
+                  rel="noopener noreferrer"
+                  target="_blank"
+                >图标</a>
+                <span className="title">{item.title}</span>
+              </li>
+            );
+          })}
+        </FooterRight>
       </div>
     </FooterWrapper>
   );
