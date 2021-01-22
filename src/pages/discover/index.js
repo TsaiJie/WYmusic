@@ -1,9 +1,15 @@
-import React, { memo } from 'react';
+import React, { memo, useEffect } from 'react';
 import { discoverMenu } from '@/common/local-data';
 import { DiscoverWrapper, TopMenu } from './style';
+import requset from '@/services/request';
 import { NavLink } from 'react-router-dom';
 import { renderRoutes } from 'react-router-config';
 export default memo(function WYDiscover(props) {
+  useEffect(() => {
+    requset.get('/banner').then((res) => {
+      console.log(res);
+    });
+  }, []);
   const { routes } = props.route;
   return (
     <DiscoverWrapper>
