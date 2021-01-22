@@ -22,6 +22,7 @@ export const HeaderLeft = styled.div`
     width: 176px;
     height: 69px;
     background-position: 0 0;
+    text-indent: -999999px;
   }
   .select-list {
     display: flex;
