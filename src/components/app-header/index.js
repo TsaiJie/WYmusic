@@ -3,8 +3,10 @@ import React, { memo } from 'react';
 
 import { headerLinks } from '@/common/local-data';
 
+import { SearchOutlined } from '@ant-design/icons';
 import { HeaderWrapper, HeaderLeft, HeaderRight } from './style';
 import { NavLink } from 'react-router-dom';
+import { Input } from 'antd';
 
 export default memo(function WYAppHeader() {
   // 业务代码
@@ -35,7 +37,15 @@ export default memo(function WYAppHeader() {
             })}
           </div>
         </HeaderLeft>
-        <HeaderRight>right</HeaderRight>
+        <HeaderRight>
+          <Input
+            prefix={<SearchOutlined />}
+            className="search"
+            placeholder="音乐/视频/电台/用户"
+          />
+          <div className="center">创作者中心</div>
+          <div style={{cursor: 'pointer'}}>登陆</div>
+        </HeaderRight>
       </div>
       <div className="divider"></div>
     </HeaderWrapper>
