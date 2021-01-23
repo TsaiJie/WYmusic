@@ -1,4 +1,5 @@
 import React, { memo } from 'react';
+
 import WYTopBanner from './c-cpns/top-banner';
 import WYHotRecommend from './c-cpns/hot-recommend';
 import WYNewAlbum from './c-cpns/new-album';
