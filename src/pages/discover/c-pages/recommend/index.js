@@ -1,5 +1,5 @@
 import React, { memo, useEffect } from 'react';
-import { connect, shallowEqual, useDispatch, useSelector } from 'react-redux';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { getTopBannerAction } from './store/actionCreators';
 
 function WYRecommend(props) {
@@ -9,7 +9,7 @@ function WYRecommend(props) {
   // 需要使用浅层比较，可以提升性能， 避免无谓的重新渲染
   const { topBanners } = useSelector(
     (state) => ({
-      topBanners: state.recommend.topBanners,
+      topBanners: state.getIn(['recommend', 'topBanners']),
     }),
     shallowEqual
   );
