@@ -1,6 +1,8 @@
 import React, { memo } from 'react';
 import WYTopBanner from './c-cpns/top-banner';
 import WYHotRecommend from './c-cpns/hot-recommend';
+import WYNewAlbum from './c-cpns/new-album';
+import WYRecommendRank from './c-cpns/recommend-rank';
 import {
   RecommendWrapper,
   Content,
@@ -14,7 +16,9 @@ function WYRecommend(props) {
       <WYTopBanner />
       <Content className="wrap-v2">
         <RecommendLeft>
-          <WYHotRecommend></WYHotRecommend>
+          <WYHotRecommend />
+          <WYNewAlbum />
+          <WYRecommendRank />
         </RecommendLeft>
         <RecommendRight></RecommendRight>
       </Content>
