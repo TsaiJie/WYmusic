@@ -1,28 +1,12 @@
-import React, { memo, useEffect } from 'react';
-import { shallowEqual, useDispatch, useSelector } from 'react-redux';
-import { getTopBannerAction } from './store/actionCreators';
+import React, { memo } from 'react';
+import WYTopBanner from './c-cpns/top-banner';
+import { RecommendWrapper } from './style';
 
 function WYRecommend(props) {
-  //  redux hook的使用
-  // 组件和redux关联：获取数据和进行操作
-  // 默认是===比较
-  // 需要使用浅层比较，可以提升性能， 避免无谓的重新渲染
-  const { topBanners } = useSelector(
-    (state) => ({
-      topBanners: state.getIn(['recommend', 'topBanners']),
-    }),
-    shallowEqual
-  );
-  const dispatch = useDispatch();
-
-  // 发送网络请求
-  useEffect(() => {
-    dispatch(getTopBannerAction());
-  }, [dispatch]);
   return (
-    <div>
-      <h2>WYRecommend {topBanners.length} </h2>
-    </div>
+    <RecommendWrapper>
+      <WYTopBanner />
+    </RecommendWrapper>
   );
 }
 
