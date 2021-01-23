@@ -6,7 +6,7 @@ import { HOT_RECOMMENDS_LIMIT } from '@/common/contants';
 
 import WYThemeHeaderRCM from '@/components/theme-header-rcm';
 import { HotRecommendWrapper } from './style';
-
+import WYSongsCover from '@/components/songs-cover';
 export default memo(function WYHotRecommend() {
   // state
   //redux hooks
@@ -30,9 +30,9 @@ export default memo(function WYHotRecommend() {
         title="热门推荐"
         keywords={['华语', '流行', '民谣', '摇滚', '电子']}
       />
-      <div>
+      <div className="recommend-list">
         {hotRecommeds.map((item, index) => {
-          return <div key={item.name}>{item.name}</div>;
+          return <WYSongsCover  key={item.id} info={item} />;
         })}
       </div>
     </HotRecommendWrapper>
