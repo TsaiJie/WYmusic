@@ -1,11 +1,23 @@
 import React, { memo } from 'react';
 import WYTopBanner from './c-cpns/top-banner';
-import { RecommendWrapper } from './style';
+import WYHotRecommend from './c-cpns/hot-recommend';
+import {
+  RecommendWrapper,
+  Content,
+  RecommendLeft,
+  RecommendRight,
+} from './style';
 
 function WYRecommend(props) {
   return (
     <RecommendWrapper>
       <WYTopBanner />
+      <Content className="wrap-v2">
+        <RecommendLeft>
+          <WYHotRecommend></WYHotRecommend>
+        </RecommendLeft>
+        <RecommendRight></RecommendRight>
+      </Content>
     </RecommendWrapper>
   );
 }

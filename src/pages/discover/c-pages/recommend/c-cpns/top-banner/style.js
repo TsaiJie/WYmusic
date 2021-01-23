@@ -18,17 +18,18 @@ export const BannerLeft = styled.div`
     }
   }
   .ant-carousel .slick-dots li {
-    width: 10px;
-    height: 10px;
+    width: 8px;
+    height: 8px;
   }
   .ant-carousel .slick-dots li button {
-    width: 10px;
-    height: 10px;
-    background: #ccc;
+    width: 8px;
+    height: 8px;
+    background: white;
     border-radius: 50%;
+    opacity: 1;
   }
   .ant-carousel .slick-dots li.slick-active {
-    width: 10px;
+    width: 8px;
   }
   .ant-carousel .slick-dots li.slick-active button {
     background: #b2281e;
