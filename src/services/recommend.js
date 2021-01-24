@@ -10,3 +10,11 @@ export function getHotRecommend(limit) {
     },
   });
 }
+export function getNewAlbum(limit){
+  return request({
+    url: "/top/album",
+    params: {
+      limit
+    }
+  })
+}

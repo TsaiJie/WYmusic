@@ -3,6 +3,7 @@ import * as actionTypes from './constants';
 const defaultState = {
   topBanners: [],
   hotRecommends: [],
+  newAlbums: [],
 };
 
 const reducer = produce((draft, action) => {
@@ -12,6 +13,9 @@ const reducer = produce((draft, action) => {
       break;
     case actionTypes.CHANGE_HOT_RECOMMENDS:
       draft.hotRecommends = action.hotRecommends;
+      break;
+    case actionTypes.CHANGE_NEW_ALBUMS:
+      draft.newAlbums = action.newAlbums;
       break;
     default:
       break;

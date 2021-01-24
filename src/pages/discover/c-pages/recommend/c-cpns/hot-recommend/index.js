@@ -1,7 +1,7 @@
 import React, { memo, useEffect } from 'react';
 
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
-import { getHotRecommendAction } from '../../store/actionCreators';
+import { getHotRecommendAction } from '../../store';
 import { HOT_RECOMMENDS_LIMIT } from '@/common/contants';
 
 import WYThemeHeaderRCM from '@/components/theme-header-rcm';
@@ -16,7 +16,6 @@ export default memo(function WYHotRecommend() {
     }),
     shallowEqual
   );
-  console.log(hotRecommeds);
   const dispatch = useDispatch();
 
   // 其他hooks
