@@ -12,7 +12,7 @@ export default memo(function WYHotRecommend() {
   //redux hooks
   const { hotRecommeds } = useSelector(
     (state) => ({
-      hotRecommeds: state.getIn(['recommend', 'hotRecommends']),
+      hotRecommeds: state.recommend.hotRecommends,
     }),
     shallowEqual
   );
@@ -32,7 +32,7 @@ export default memo(function WYHotRecommend() {
       />
       <div className="recommend-list">
         {hotRecommeds.map((item, index) => {
-          return <WYSongsCover  key={item.id} info={item} />;
+          return <WYSongsCover key={item.id} info={item} />;
         })}
       </div>
     </HotRecommendWrapper>

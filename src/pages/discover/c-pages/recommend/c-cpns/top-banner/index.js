@@ -15,7 +15,7 @@ export default memo(function WYTopBanner() {
   // 需要使用浅层比较，可以提升性能， 避免无谓的重新渲染
   const { topBanners } = useSelector(
     (state) => ({
-      topBanners: state.getIn(['recommend', 'topBanners']),
+      topBanners: state.recommend.topBanners,
     }),
     shallowEqual
   );

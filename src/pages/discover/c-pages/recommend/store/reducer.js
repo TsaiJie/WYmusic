@@ -1,19 +1,21 @@
-import { Map } from 'immutable';
+import produce from 'immer';
 import * as actionTypes from './constants';
-const defaultState = Map({
+const defaultState = {
   topBanners: [],
-  hotRecommends: []
-});
+  hotRecommends: [],
+};
 
-function reducer(state = defaultState, action) {
+const reducer = produce((draft, action) => {
   switch (action.type) {
     case actionTypes.CHANGE_TOP_BANNERS:
-      return state.set('topBanners', action.topBanners);
+      draft.topBanners = action.topBanners;
+      break;
     case actionTypes.CHANGE_HOT_RECOMMENDS:
-      return state.set('hotRecommends',action.hotRecommends)
+      draft.hotRecommends = action.hotRecommends;
+      break;
     default:
-      return state;
+      break;
   }
-}
+}, defaultState);
 
 export default reducer;
