@@ -4,6 +4,10 @@ const defaultState = {
   topBanners: [],
   hotRecommends: [],
   newAlbums: [],
+
+  upRanking: {},
+  newRanking: {},
+  originRanking: {},
 };
 
 const reducer = produce((draft, action) => {
@@ -16,6 +20,15 @@ const reducer = produce((draft, action) => {
       break;
     case actionTypes.CHANGE_NEW_ALBUMS:
       draft.newAlbums = action.newAlbums;
+      break;
+    case actionTypes.CHANGE_UP_RANKING:
+      draft.upRanking = action.upRanking;
+      break;
+    case actionTypes.CHANGE_NEW_RANKING:
+      draft.newRanking = action.newRanking;
+      break;
+    case actionTypes.CHANGE_ORIGIN_RANKING:
+      draft.originRanking = action.originRanking;
       break;
     default:
       break;
