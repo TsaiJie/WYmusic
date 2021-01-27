@@ -13,6 +13,11 @@ const changeCurrentSongAction = (currentSong) => ({
   type: actionTypes.CHANGE_CURRENT_SONG,
   currentSong,
 });
+
+export const changeSequenceAction = (sequence) => ({
+  type: actionTypes.CHANGE_SEQUENCE,
+  sequence
+})
 export const getSongDetailAction = (ids) => {
   return (dispatch, getState) => {
     // 根据id查找playlist中是否有该首歌

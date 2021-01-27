@@ -1,6 +1,9 @@
 import React, { memo, useCallback, useEffect, useRef, useState } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
-import { getSongDetailAction } from '../store/actionCreators';
+import {
+  changeSequenceAction,
+  getSongDetailAction,
+} from '../store/actionCreators';
 import { getSizeImage, formatDate, getPlaySong } from '@/utils/data-format';
 
 import { Slider } from 'antd';
@@ -14,9 +17,10 @@ export default memo(function WYAppPlayerBar() {
   // 滑块滑动的时候isChanging 为true，当滑块滑动暂停的时候isChanging是false
   const [isChanging, setIsChanging] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
-  const { currentSong } = useSelector(
+  const { currentSong, sequence } = useSelector(
     (state) => ({
       currentSong: state.player.currentSong,
+      sequence: state.player.sequence,
     }),
     shallowEqual
   );
@@ -38,6 +42,14 @@ export default memo(function WYAppPlayerBar() {
     dispatch(getSongDetailAction(1811147916));
   }, [dispatch]);
   // handle fun
+  const changeSequence = () => {
+    let currentSequence = sequence + 1;
+    if (currentSequence > 2) {
+      currentSequence = 0;
+    }
+    dispatch(changeSequenceAction(currentSequence));
+  };
+
   const playMusic = useCallback(() => {
     isPlaying ? audioRef.current.pause() : audioRef.current.play();
     setIsPlaying(!isPlaying);
@@ -115,14 +127,17 @@ export default memo(function WYAppPlayerBar() {
             </div>
           </div>
         </PlayInfo>
-        <Operator>
+        <Operator sequence={sequence}>
           <div className="left">
             <button className="sprite_player btn favor"></button>
             <button className="sprite_player btn share"></button>
           </div>
           <div className="right sprite_player">
             <button className="sprite_player btn volume"></button>
-            <button className="sprite_player btn loop"></button>
+            <button
+              className="sprite_player btn loop"
+              onClick={(e) => changeSequence()}
+            ></button>
             <button className="sprite_player btn playList"></button>
           </div>
         </Operator>
