@@ -1,6 +1,7 @@
 import React, { memo, useCallback, useEffect, useRef, useState } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import {
+  changeCurrentSongAndIndexAction,
   changeSequenceAction,
   getSongDetailAction,
 } from '../store/actionCreators';
@@ -35,10 +36,17 @@ export default memo(function WYAppPlayerBar() {
 
   useEffect(() => {
     audioRef.current.src = getPlaySong(currentSong.id);
+    audioRef.current
+      .play()
+      .then((res) => {
+        setIsPlaying(true);
+      })
+      .catch((err) => {
+        setIsPlaying(false);
+      });
   }, [currentSong]);
   // other hooks
   useEffect(() => {
-    //1811147916,1369798757
     dispatch(getSongDetailAction(1811147916));
   }, [dispatch]);
   // handle fun
@@ -50,6 +58,18 @@ export default memo(function WYAppPlayerBar() {
     dispatch(changeSequenceAction(currentSequence));
   };
 
+  const changeMusic = (tag) => {
+    dispatch(changeCurrentSongAndIndexAction(tag));
+  };
+  const handleMusicEnded = () => {
+    if (sequence === 2) {
+      //单曲循环
+      audioRef.current.currentTime = 0;
+      audioRef.current.play()
+    } else {
+      dispatch(changeCurrentSongAndIndexAction(1));
+    }
+  };
   const playMusic = useCallback(() => {
     isPlaying ? audioRef.current.pause() : audioRef.current.play();
     setIsPlaying(!isPlaying);
@@ -91,12 +111,18 @@ export default memo(function WYAppPlayerBar() {
     <PlayerBarWrapper className="sprite_player">
       <div className="content wrap-v2">
         <Control isPlaying={isPlaying}>
-          <button className="sprite_player prev"></button>
+          <button
+            className="sprite_player prev"
+            onClick={(e) => changeMusic(-1)}
+          ></button>
           <button
             className="sprite_player play"
             onClick={(e) => playMusic()}
           ></button>
-          <button className="sprite_player next"></button>
+          <button
+            className="sprite_player next"
+            onClick={(e) => changeMusic(1)}
+          ></button>
         </Control>
         <PlayInfo>
           <div className="image">
@@ -142,7 +168,11 @@ export default memo(function WYAppPlayerBar() {
           </div>
         </Operator>
       </div>
-      <audio ref={audioRef} onTimeUpdate={timeUpdate} />
+      <audio
+        ref={audioRef}
+        onTimeUpdate={(e) => timeUpdate(e)}
+        onEnded={(e) => handleMusicEnded(e)}
+      />
     </PlayerBarWrapper>
   );
 });

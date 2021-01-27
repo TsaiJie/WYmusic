@@ -1,8 +1,9 @@
 import produce from 'immer';
+import { defaultSongs } from '@/common/local-data';
 import * as actionTypes from './constants';
 const defaultState = {
   currentSong: {},
-  playList: [],
+  playList: [...defaultSongs],
   currentSongIndex: 0,
   sequence: 0, // 0顺序 1随机 2 单曲
 };
