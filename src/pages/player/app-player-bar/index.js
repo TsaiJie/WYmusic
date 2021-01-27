@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useRef, useState } from 'react';
+import React, { memo, useCallback, useEffect, useRef, useState } from 'react';
 import { getSizeImage, formatDate, getPlaySong } from '@/utils/data-format';
 
 import { Slider } from 'antd';
@@ -9,6 +9,10 @@ import { getSongDetailAction } from '../store/actionCreators';
 export default memo(function WYAppPlayerBar() {
   // props and state
   const [currentTime, setCurrentTime] = useState(0);
+  const [progress, setProgress] = useState(0);
+  // 滑块滑动的时候isChanging 为true，当滑块滑动暂停的时候isChanging是false
+  const [isChanging, setIsChanging] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false);
   const { currentSong } = useSelector(
     (state) => ({
       currentSong: state.player.currentSong,
@@ -23,23 +27,57 @@ export default memo(function WYAppPlayerBar() {
   const duration = currentSong.dt || 0;
   const showDuration = formatDate(duration, 'mm:ss');
   const showCurrentTime = formatDate(currentTime, 'mm:ss');
-  const progress = (currentTime / duration) * 100;
+
+  useEffect(() => {
+    audioRef.current.src = getPlaySong(currentSong.id);
+  }, [currentSong]);
   // other hooks
   useEffect(() => {
-    dispatch(getSongDetailAction(1369798757));
+    //1811147916,1369798757
+    dispatch(getSongDetailAction(1811147916));
   }, [dispatch]);
   // handle fun
-  const playMusic = () => {
-    audioRef.current.src = getPlaySong(currentSong.id);
-    audioRef.current.play();
-  };
-  const timeUpdate = (e) => {
-    setCurrentTime(e.target.currentTime * 1000);
-  };
+  const playMusic = useCallback(() => {
+    isPlaying ? audioRef.current.pause() : audioRef.current.play();
+    setIsPlaying(!isPlaying);
+  }, [isPlaying]);
+  const timeUpdate = useCallback(
+    (e) => {
+      if (!isChanging) {
+        setCurrentTime(e.target.currentTime * 1000);
+        // console.log('timeUpdate: currentTime: ', e.target.currentTime);
+        setProgress((currentTime / duration) * 100);
+      }
+    },
+    [isChanging, currentTime, duration]
+  );
+  //  监听滑块的滑动
+  const sliderChange = useCallback(
+    (value) => {
+      const currentTime = (value / 100) * duration;
+
+      setIsChanging(true);
+      setProgress(value);
+      setCurrentTime(currentTime);
+    },
+    [duration]
+  );
+  // 监听滑块儿滑动暂停
+  const sliderAfterChange = useCallback(
+    (value) => {
+      const currentTime = ((value / 100) * duration) / 1000;
+      audioRef.current.currentTime = currentTime;
+      setIsChanging(false);
+      if (!isPlaying) {
+        playMusic();
+      }
+    },
+    [duration, isPlaying, playMusic]
+  );
   return (
     <PlayerBarWrapper className="sprite_player">
       <div className="content wrap-v2">
-        <Control>
+        <Control isPlaying={isPlaying}>
           <button className="sprite_player prev"></button>
           <button
             className="sprite_player play"
@@ -61,7 +99,13 @@ export default memo(function WYAppPlayerBar() {
               </a>
             </div>
             <div className="progress">
-              <Slider defaultValue={0} value={progress} />
+              <Slider
+                tipFormatter={(e) => showCurrentTime}
+                defaultValue={0}
+                value={progress}
+                onChange={sliderChange}
+                onAfterChange={sliderAfterChange}
+              />
               <div className="time">
                 <span className="now-time">{showCurrentTime}</span>
                 <span className="divider">/</span>
