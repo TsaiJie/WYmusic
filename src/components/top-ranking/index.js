@@ -1,9 +1,18 @@
 import React, { memo } from 'react';
+import { getSongDetailAction } from '@/pages/player/store';
 import { getSizeImage } from '@/utils/data-format';
 import { TopRankingWrapper } from './style';
+import { useDispatch } from 'react-redux';
 export default memo(function WYTopRanking(props) {
   const { info } = props;
   const { tracks = [] } = info;
+  //redux hook
+  const dispatch = useDispatch();
+
+  //other handle
+  const playMusic = (item) => {
+    dispatch(getSongDetailAction(item.id));
+  };
   return (
     <TopRankingWrapper>
       <div className="header">
@@ -29,7 +38,10 @@ export default memo(function WYTopRanking(props) {
               <div className="info">
                 <div className="name text-nowrap">{item.name}</div>
                 <div className="operate">
-                  <button className="btn sprite_02 play"></button>
+                  <button
+                    className="btn sprite_02 play"
+                    onClick={(e) => playMusic(item)}
+                  ></button>
                   <button className="btn sprite_icon2 addto"></button>
                   <button className="btn sprite_02 favor"></button>
                 </div>
@@ -39,7 +51,7 @@ export default memo(function WYTopRanking(props) {
         })}
       </div>
       <div className="footer">
-        <a href="/todo">查看全部  &gt;</a>
+        <a href="/todo">查看全部 &gt;</a>
       </div>
     </TopRankingWrapper>
   );

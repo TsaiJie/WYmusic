@@ -1,10 +1,11 @@
 import React, { memo, useCallback, useEffect, useRef, useState } from 'react';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import { getSongDetailAction } from '../store/actionCreators';
 import { getSizeImage, formatDate, getPlaySong } from '@/utils/data-format';
 
 import { Slider } from 'antd';
+import { NavLink } from 'react-router-dom';
 import { PlayerBarWrapper, Control, PlayInfo, Operator } from './style';
-import { shallowEqual, useDispatch, useSelector } from 'react-redux';
-import { getSongDetailAction } from '../store/actionCreators';
 
 export default memo(function WYAppPlayerBar() {
   // props and state
@@ -87,9 +88,9 @@ export default memo(function WYAppPlayerBar() {
         </Control>
         <PlayInfo>
           <div className="image">
-            <a href="/#">
+            <NavLink to="/discover/player">
               <img src={getSizeImage(picUrl, 35)} alt="音乐" />
-            </a>
+            </NavLink>
           </div>
           <div className="info">
             <div className="song">

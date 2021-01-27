@@ -5,6 +5,7 @@ import WYDjradio from '@/pages/discover/c-pages/djradio';
 import WYRanking from '@/pages/discover/c-pages/ranking';
 import WYRecommend from '@/pages/discover/c-pages/recommend';
 import WYSongs from '@/pages/discover/c-pages/songs';
+import WYPlayer from '@/pages/player';
 
 import WYMine from '@/pages/mine';
 import WYFriend from '@/pages/friend';
@@ -49,6 +50,10 @@ const routes = [
       {
         path: '/discover/songs',
         component: WYSongs,
+      },
+      {
+        path: '/discover/player',
+        component: WYPlayer,
       },
     ],
   },
