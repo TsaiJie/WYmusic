@@ -18,10 +18,11 @@ export default memo(function WYAppPlayerBar() {
   // 滑块滑动的时候isChanging 为true，当滑块滑动暂停的时候isChanging是false
   const [isChanging, setIsChanging] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
-  const { currentSong, sequence } = useSelector(
+  const { currentSong, sequence, lyricList } = useSelector(
     (state) => ({
       currentSong: state.player.currentSong,
       sequence: state.player.sequence,
+      lyricList: state.player.lyricList,
     }),
     shallowEqual
   );
@@ -65,7 +66,7 @@ export default memo(function WYAppPlayerBar() {
     if (sequence === 2) {
       //单曲循环
       audioRef.current.currentTime = 0;
-      audioRef.current.play()
+      audioRef.current.play();
     } else {
       dispatch(changeCurrentSongAndIndexAction(1));
     }
@@ -81,8 +82,18 @@ export default memo(function WYAppPlayerBar() {
         // console.log('timeUpdate: currentTime: ', e.target.currentTime);
         setProgress((currentTime / duration) * 100);
       }
+      // 获取当前歌词
+      let currentLyricIndex = 0;
+      for (let i = 0; i < lyricList.length; i++) {
+        const lyricItem = lyricList[i];
+        if (e.target.currentTime * 1000 < lyricItem.time) {
+          currentLyricIndex = i;
+          break;
+        }
+      }
+      console.log(lyricList[currentLyricIndex - 1]);
     },
-    [isChanging, currentTime, duration]
+    [isChanging, currentTime, duration, lyricList]
   );
   //  监听滑块的滑动
   const sliderChange = useCallback(
