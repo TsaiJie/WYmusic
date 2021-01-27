@@ -1,18 +1,29 @@
 import React, { memo, useEffect } from 'react';
+import { getSizeImage, formatDate } from '@/utils/data-format';
 
 import { Slider } from 'antd';
 import { PlayerBarWrapper, Control, PlayInfo, Operator } from './style';
-import { useDispatch, useSelector } from 'react-redux';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { getSongDetailAction } from '../store/actionCreators';
+
 export default memo(function WYAppPlayerBar() {
-  const { currentSong } = useSelector((state) => ({
-    currentSong: state.player.currentSong,
-  }));
+  const { currentSong } = useSelector(
+    (state) => ({
+      currentSong: state.player.currentSong,
+    }),
+    shallowEqual
+  );
   const dispatch = useDispatch();
   // other hooks
   useEffect(() => {
     dispatch(getSongDetailAction(1369798757));
   }, [dispatch]);
+
+  const picUrl = (currentSong.al && currentSong.al.picUrl) || '';
+  const singerName = (currentSong.ar && currentSong.ar[0].name) || '未知歌手';
+  const songName = currentSong.name || '未知歌曲';
+  const duration = currentSong.dt || 0;
+  const showDuration = formatDate(duration, 'mm:ss');
   return (
     <PlayerBarWrapper className="sprite_player">
       <div className="content wrap-v2">
@@ -24,17 +35,14 @@ export default memo(function WYAppPlayerBar() {
         <PlayInfo>
           <div className="image">
             <a href="/#">
-              <img
-                src="https://p2.music.126.net/9n-c2HdvLnOgNTFTNL34Hg==/109951165623595294.jpg?param=34y34"
-                alt="音乐"
-              />
+              <img src={getSizeImage(picUrl, 35)} alt="音乐" />
             </a>
           </div>
           <div className="info">
             <div className="song">
-              <span className="song-name">白月光与朱砂痣</span>
+              <span className="song-name">{songName}</span>
               <a href="#/" className="singer-name">
-                水源小樱
+                {singerName}
               </a>
             </div>
             <div className="progress">
@@ -42,7 +50,7 @@ export default memo(function WYAppPlayerBar() {
               <div className="time">
                 <span className="now-time">02:30</span>
                 <span className="divider">/</span>
-                <span className="duration">04:30</span>
+                <span className="duration">{showDuration}</span>
               </div>
             </div>
           </div>
