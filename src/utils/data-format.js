@@ -49,3 +49,6 @@ export function formatMonthDay(time) {
 export function formatMinuteSecond(time) {
   return formatDate(time, 'mm:ss');
 }
+export function getPlaySong(id) {
+  return `https://music.163.com/song/media/outer/url?id=${id}.mp3`;
+}

@@ -1,5 +1,5 @@
-import React, { memo, useEffect } from 'react';
-import { getSizeImage, formatDate } from '@/utils/data-format';
+import React, { memo, useEffect, useRef, useState } from 'react';
+import { getSizeImage, formatDate, getPlaySong } from '@/utils/data-format';
 
 import { Slider } from 'antd';
 import { PlayerBarWrapper, Control, PlayInfo, Operator } from './style';
@@ -7,6 +7,8 @@ import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { getSongDetailAction } from '../store/actionCreators';
 
 export default memo(function WYAppPlayerBar() {
+  // props and state
+  const [currentTime, setCurrentTime] = useState(0);
   const { currentSong } = useSelector(
     (state) => ({
       currentSong: state.player.currentSong,
@@ -14,22 +16,35 @@ export default memo(function WYAppPlayerBar() {
     shallowEqual
   );
   const dispatch = useDispatch();
-  // other hooks
-  useEffect(() => {
-    dispatch(getSongDetailAction(1369798757));
-  }, [dispatch]);
-
+  const audioRef = useRef();
   const picUrl = (currentSong.al && currentSong.al.picUrl) || '';
   const singerName = (currentSong.ar && currentSong.ar[0].name) || '未知歌手';
   const songName = currentSong.name || '未知歌曲';
   const duration = currentSong.dt || 0;
   const showDuration = formatDate(duration, 'mm:ss');
+  const showCurrentTime = formatDate(currentTime, 'mm:ss');
+  const progress = (currentTime / duration) * 100;
+  // other hooks
+  useEffect(() => {
+    dispatch(getSongDetailAction(1369798757));
+  }, [dispatch]);
+  // handle fun
+  const playMusic = () => {
+    audioRef.current.src = getPlaySong(currentSong.id);
+    audioRef.current.play();
+  };
+  const timeUpdate = (e) => {
+    setCurrentTime(e.target.currentTime * 1000);
+  };
   return (
     <PlayerBarWrapper className="sprite_player">
       <div className="content wrap-v2">
         <Control>
           <button className="sprite_player prev"></button>
-          <button className="sprite_player play"></button>
+          <button
+            className="sprite_player play"
+            onClick={(e) => playMusic()}
+          ></button>
           <button className="sprite_player next"></button>
         </Control>
         <PlayInfo>
@@ -46,9 +61,9 @@ export default memo(function WYAppPlayerBar() {
               </a>
             </div>
             <div className="progress">
-              <Slider defaultValue={30} />
+              <Slider defaultValue={0} value={progress} />
               <div className="time">
-                <span className="now-time">02:30</span>
+                <span className="now-time">{showCurrentTime}</span>
                 <span className="divider">/</span>
                 <span className="duration">{showDuration}</span>
               </div>
@@ -67,6 +82,7 @@ export default memo(function WYAppPlayerBar() {
           </div>
         </Operator>
       </div>
+      <audio ref={audioRef} onTimeUpdate={timeUpdate} />
     </PlayerBarWrapper>
   );
 });
