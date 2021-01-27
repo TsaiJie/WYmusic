@@ -1,5 +1,6 @@
 import { getSongDetail, getLyric } from '@/services/player';
 import { getRandomNumber } from '@/utils/math-utils';
+import { parseLyric } from '@/utils/parse-lyric';
 import * as actionTypes from './constants';
 
 const changePlayListAction = (playList) => ({
@@ -14,6 +15,10 @@ const changeCurrentSongAction = (currentSong) => ({
   type: actionTypes.CHANGE_CURRENT_SONG,
   currentSong,
 });
+const changeLyricsListAction = (lyricList) =>({
+  type: actionTypes.CHANGE_LYRIC_LIST,
+  lyricList
+})
 // 播放下一首
 export const changeCurrentSongAndIndexAction = (tag) => {
   return (dispatch, getState) => {
@@ -89,7 +94,9 @@ export const getSongDetailAction = (ids) => {
 export const getLyricAction = (id) => {
   return (dispatch) => {
     getLyric(id).then((res) => {
-      console.log(res.lrc.lyric);
+      const lyric = res.lrc.lyric;
+      const lyricList = parseLyric(lyric);
+      dispatch(changeLyricsListAction(lyricList))
     });
   };
 };

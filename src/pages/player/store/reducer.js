@@ -5,7 +5,8 @@ const defaultState = {
   currentSong: {},
   playList: [...defaultSongs],
   currentSongIndex: 0,
-  sequence: 0, // 0顺序 1随机 2 单曲
+  sequence: 0, // 0顺序 1随机 2 单曲,
+  lyricList: [],
 };
 
 const reducer = produce((draft, action) => {
@@ -21,6 +22,9 @@ const reducer = produce((draft, action) => {
       break;
     case actionTypes.CHANGE_SEQUENCE:
       draft.sequence = action.sequence;
+      break;
+    case actionTypes.CHANGE_LYRIC_LIST:
+      draft.lyricList = action.lyricList;
       break;
     default:
       break;
