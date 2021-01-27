@@ -4,6 +4,11 @@ import WYTopBanner from './c-cpns/top-banner';
 import WYHotRecommend from './c-cpns/hot-recommend';
 import WYNewAlbum from './c-cpns/new-album';
 import WYRecommendRank from './c-cpns/recommend-rank';
+
+import WYUserLogin from './c-cpns/user-login';
+import WYSettleSinger from './c-cpns/settle-singer';
+import WYHotRadio from './c-cpns/hot-radio';
+
 import {
   RecommendWrapper,
   Content,
@@ -21,7 +26,11 @@ function WYRecommend(props) {
           <WYNewAlbum />
           <WYRecommendRank />
         </RecommendLeft>
-        <RecommendRight></RecommendRight>
+        <RecommendRight>
+          <WYUserLogin />
+          <WYSettleSinger />
+          <WYHotRadio />
+        </RecommendRight>
       </Content>
     </RecommendWrapper>
   );
