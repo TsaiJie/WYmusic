@@ -1,7 +1,18 @@
-import React, { memo } from 'react';
+import React, { memo, useEffect } from 'react';
+
 import { Slider } from 'antd';
 import { PlayerBarWrapper, Control, PlayInfo, Operator } from './style';
+import { useDispatch, useSelector } from 'react-redux';
+import { getSongDetailAction } from '../store/actionCreators';
 export default memo(function WYAppPlayerBar() {
+  const { currentSong } = useSelector((state) => ({
+    currentSong: state.player.currentSong,
+  }));
+  const dispatch = useDispatch();
+  // other hooks
+  useEffect(() => {
+    dispatch(getSongDetailAction(1369798757));
+  }, [dispatch]);
   return (
     <PlayerBarWrapper className="sprite_player">
       <div className="content wrap-v2">
